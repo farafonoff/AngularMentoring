@@ -9,6 +9,7 @@ import { CourseWidgetComponent } from './pages/courses/course-widget/course-widg
 import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LogoComponent } from './common/logo/logo.component';
+import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { LogoComponent } from './common/logo/logo.component';
     CourseWidgetComponent,
     HeaderComponent,
     FooterComponent,
-    LogoComponent
+    LogoComponent,
+    ToolboxComponent
   ],
   imports: [
     BrowserModule

@@ -1,0 +1,14 @@
+.logo-block {
+    display: flex;
+    align-items: center;
+}
+.logo-img {
+    background-image: url('./../../../assets/logo.webp');
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+}
+.logo-title {
+    font-size: 4em;
+}
