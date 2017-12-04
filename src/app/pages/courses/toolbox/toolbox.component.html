@@ -1,7 +1,11 @@
 <div class='container'>
   <div class='row'>
-      <input class='col-6' type='text'>
-      <button class='col-auto'>Find</button>
-      <button class='col-auto ml-auto'>Add course</button>
+      <div class="input-group col-8">
+        <input class='form-control' type='text' [(ngModel)]="findValue">
+        <span class="input-group-btn">
+            <button class='btn btn-primary' (click)="find()">Find</button>
+        </span>
+      </div>
+      <button class='col-auto ml-auto btn btn-secondary'>Add course</button>
   </div>
 </div>

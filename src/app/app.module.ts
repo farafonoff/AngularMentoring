@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './pages/courses/courses.component';
@@ -24,7 +25,8 @@ import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
     ToolboxComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

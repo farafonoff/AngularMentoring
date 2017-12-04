@@ -1,4 +1,10 @@
 <app-toolbox></app-toolbox>
-<p>
-  courses works!
-</p>
+<div class='container'>
+  <div class='row my-5' *ngFor="let course of courses">
+    <div class='col-12'>
+        <app-course-widget [course]="course" 
+        (delete)="deleteCourse($event)"
+        ></app-course-widget>
+    </div>
+  </div>
+</div>

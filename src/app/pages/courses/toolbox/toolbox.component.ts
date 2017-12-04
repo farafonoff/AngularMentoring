@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolboxComponent implements OnInit {
 
+  findValue = '';
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  find() {
+    console.log(this.findValue);
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Course } from '../../../model/course.model';
 
 @Component({
   selector: 'app-course-widget',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseWidgetComponent implements OnInit {
 
+  @Input() course: Course;
+  @Output() delete = new EventEmitter<Course>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  delClick() {
+    this.delete.emit(this.course);
   }
 
 }
