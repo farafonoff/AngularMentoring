@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../model/course.model';
-import { fakeCourses } from '../../model/courses.mock';
 import { CoursesService } from '../../services/courses.service';
 
 @Component({
@@ -9,10 +8,11 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
-  courses: Course[];
+  get courses(): Course[] {
+    return this.coursesService.getList();
+  }
 
   constructor(private coursesService: CoursesService) { 
-    this.courses = [];
     console.log('constructor');
   }
 
@@ -22,7 +22,6 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     console.log('OnInit');
-    this.courses = this.coursesService.getList();
   }
 
   ngDoCheck() {
@@ -30,7 +29,7 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(event: Course) {
-    console.log(event.id);
+    this.coursesService.delete(event.id);
   }
 
 }

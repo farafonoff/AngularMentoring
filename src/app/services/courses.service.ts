@@ -5,7 +5,7 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class CoursesService {
-  data:Course[] = [];
+  private data:Course[] = [];
 
   constructor() { this.data = fakeCourses(); }
 
