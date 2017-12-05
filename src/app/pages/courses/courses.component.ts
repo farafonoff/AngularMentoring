@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Course } from '../../model/course.model';
 import { CoursesService } from '../../services/courses.service';
+declare var jQuery:any;
 
 @Component({
   selector: 'app-courses',
@@ -8,6 +9,9 @@ import { CoursesService } from '../../services/courses.service';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
+  @ViewChild('deleteConfirm') deleteModal:ElementRef;
+
+  _deletingId;
   get courses(): Course[] {
     return this.coursesService.getList();
   }
@@ -29,7 +33,13 @@ export class CoursesComponent implements OnInit {
   }
 
   deleteCourse(event: Course) {
-    this.coursesService.delete(event.id);
+    this._deletingId = event.id;
+    jQuery(this.deleteModal.nativeElement).modal('show');
+    //this.coursesService.delete(event.id);
   }
 
+  _callDeleteItem() {
+    this.coursesService.delete(this._deletingId);
+    jQuery(this.deleteModal.nativeElement).modal('hide');
+  }
 }
