@@ -11,6 +11,7 @@ import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LogoComponent } from './common/logo/logo.component';
 import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
+import { CoursesService } from './services/courses.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ CoursesService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

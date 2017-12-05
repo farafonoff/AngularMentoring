@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../model/course.model';
 import { fakeCourses } from '../../model/courses.mock';
+import { CoursesService } from '../../services/courses.service';
 
 @Component({
   selector: 'app-courses',
@@ -10,7 +11,7 @@ import { fakeCourses } from '../../model/courses.mock';
 export class CoursesComponent implements OnInit {
   courses: Course[];
 
-  constructor() { 
+  constructor(private coursesService: CoursesService) { 
     this.courses = [];
     console.log('constructor');
   }
@@ -21,7 +22,7 @@ export class CoursesComponent implements OnInit {
 
   ngOnInit() {
     console.log('OnInit');
-    this.courses = fakeCourses();
+    this.courses = this.coursesService.getList();
   }
 
   ngDoCheck() {
