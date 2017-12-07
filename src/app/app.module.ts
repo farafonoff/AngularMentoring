@@ -12,6 +12,7 @@ import { FooterComponent } from './common/footer/footer.component';
 import { LogoComponent } from './common/logo/logo.component';
 import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
 import { CoursesService } from './services/courses.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { CoursesService } from './services/courses.service';
     BrowserModule,
     FormsModule
   ],
-  providers: [ CoursesService ],
+  providers: [ CoursesService, AuthService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
