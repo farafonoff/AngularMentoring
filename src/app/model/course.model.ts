@@ -3,8 +3,9 @@ export class Course {
         public id: number,
         public name: string,
         public createDate: Date,
-        public durationSeconds: number,
-        public description: string
+        public durationMinutes: number,
+        public description: string,
+        public topRated: boolean
     ) {
 
     }

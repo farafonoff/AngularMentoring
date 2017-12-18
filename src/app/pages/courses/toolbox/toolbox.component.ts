@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-toolbox',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbox.component.css']
 })
 export class ToolboxComponent implements OnInit {
+  @Output() findClick = new EventEmitter<string>();
 
   findValue = '';
 
@@ -15,7 +16,7 @@ export class ToolboxComponent implements OnInit {
   }
 
   find() {
-    console.log(this.findValue);
+    this.findClick.emit(this.findValue);
   }
 
 }

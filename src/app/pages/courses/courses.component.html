@@ -1,11 +1,16 @@
-<app-toolbox></app-toolbox>
+<app-toolbox (findClick)="filterByString($event)"></app-toolbox>
 <div class='container'>
-  <div class='row my-5' *ngFor="let course of courses">
+  <div class='row my-5' *ngFor="let course of courses | orderBy:'createDate'">
     <div class='col-12'>
         <app-course-widget [course]="course" 
         (delete)="deleteCourse($event)"
         ></app-course-widget>
     </div>
+  </div>
+  <div class='row my-5' *ngIf="!courses?.length">
+    <div class='col-12 text-center alert alert-info'>
+      No data. Feel free to add new course.
+    </div>  
   </div>
   <div class="modal fade" #deleteConfirm>
     <div class="modal-dialog" role="document">

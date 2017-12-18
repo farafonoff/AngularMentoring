@@ -13,6 +13,10 @@ import { LogoComponent } from './common/logo/logo.component';
 import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
 import { CoursesService } from './services/courses.service';
 import { AuthService } from './services/auth.service';
+import { FreshnessDirective } from './directives/freshness.directive';
+import { FormatDurationPipe } from './pipes/format-duration.pipe';
+import { OrderByPipe } from './pipes/order-by.pipe';
+import { FilterByPipe } from './pipes/filter-by.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { AuthService } from './services/auth.service';
     HeaderComponent,
     FooterComponent,
     LogoComponent,
-    ToolboxComponent
+    ToolboxComponent,
+    FreshnessDirective,
+    FormatDurationPipe,
+    OrderByPipe,
+    FilterByPipe
   ],
   imports: [
     BrowserModule,

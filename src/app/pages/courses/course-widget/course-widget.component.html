@@ -1,10 +1,11 @@
-<div class="card">
+<div class="card" [appFreshness]="course.createDate" [ngClass]="{'alert-primary': course.topRated}">
   <div class='card-body'>
     <h2 class='card-title'>
-      {{course.name}}
+      {{course.name | uppercase}}
+      <i class="fa fa-star" aria-hidden="true" *ngIf='course.topRated'></i>
     </h2>
     <h6 class='card-subtitle mb-2 text-muted'>
-      {{course.durationSeconds}}
+      {{course.durationMinutes | formatDuration}}
     </h6>
     {{course.description}}
   </div>
@@ -13,6 +14,6 @@
     <button class='btn btn-danger' (click)='delClick()'>Delete</button>
   </div>
   <div class="card-footer text-muted">
-    {{course.createDate}}
+    {{course.createDate | date:'dd.MM.yyyy'}}
   </div>
 </div>
