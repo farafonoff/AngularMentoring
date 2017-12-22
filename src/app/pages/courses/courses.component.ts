@@ -3,7 +3,7 @@ import { Course } from '../../model/course.model';
 import { CoursesService } from '../../services/courses.service';
 import { OnChanges, DoCheck } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FilterByPipe } from '../../pipes/filter-by.pipe';
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Component({
   selector: 'app-courses',
@@ -14,13 +14,9 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck {
   @ViewChild('deleteConfirm') deleteModal: ElementRef;
 
   _deletingId;
-  _courses: Course[] = [];
-  get courses(): Course[] {
-    return this._courses;
-  }
-  set courses(val: Course[]) {
-    this._courses = val;
-  }
+  courses: Course[] = [];
+  filter: string = null;
+  filterBy: FilterByPipe = new FilterByPipe();
 
   constructor(private coursesService: CoursesService) {
     console.log('constructor');
@@ -32,7 +28,7 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck {
 
   ngOnInit() {
     console.log('OnInit');
-    this.courses = this.coursesService.getList();
+    this._updateModel();
   }
 
   ngDoCheck() {
@@ -46,12 +42,21 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck {
   }
 
   _callDeleteItem() {
+    console.log('deleting', this._deletingId);
     this.coursesService.delete(this._deletingId);
     jQuery(this.deleteModal.nativeElement).modal('hide');
+    this._updateModel();
   }
 
   filterByString(filter) {
-    const filterer = new FilterByPipe();
-    this.courses = filterer.transform(this.coursesService.getList(), filter);
+    this.filter = filter;
+  }
+
+  _updateModel() {
+    this.courses = this.coursesService.getList().toArray();
+    console.log(this.courses);
+    if (this.filter) {
+      this.courses = this.filterBy.transform(this.courses, this.filter);
+    }
   }
 }

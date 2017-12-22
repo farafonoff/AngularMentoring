@@ -1,37 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Course } from '../model/course.model';
 import { fakeCourses } from '../model/courses.mock';
-import * as _ from 'lodash';
+import { List } from 'immutable';
 
 @Injectable()
 export class CoursesService {
-  private data:Course[] = [];
+  private data: List<Course> = List([]);
 
-  constructor() { this.data = fakeCourses(); }
+  constructor() { this.data = List(fakeCourses()); }
 
-  getList(): Course[] {
+  getList(): List<Course> {
     return this.data;
   }
 
   createCourse(val: Course) {
-    this.data.push(val);
+    this.data = this.data.push(val);
   }
 
-  findById(id: number) {
-    return _.find(this.data, { id });
+  findById(id: number): Course {
+    return this.data.find(course => course.id === id);
   }
 
   update(val: Course) {
-    let idx = _.findIndex(this.data, { id: val.id });
-    if (idx > -1) {
-      this.data[idx] = val;
-    } else {
-      this.data.push(val);
-    }
+    const idx = this.data.findIndex(course => course.id === val.id);
+    this.data = idx > -1
+      ? this.data.set(idx, val)
+      : this.data.push(val);
   }
 
   delete(id: number) {
-    _.remove(this.data, { id })
+    this.data = this.data.filterNot(course => course.id === id).toList();
   }
 
 }
