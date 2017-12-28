@@ -50,6 +50,7 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck {
 
   filterByString(filter) {
     this.filter = filter;
+    this._updateModel();
   }
 
   _updateModel() {
