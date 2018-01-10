@@ -13,12 +13,12 @@ export class CourseFake {
 
 export class Course {
     constructor(
-        public id: number,
-        public name: string,
-        public createDate: Date,
-        public durationMinutes: number,
-        public description: string,
-        public topRated: boolean
+        public id: number = null,
+        public name: string = '',
+        public createDate: Date = new Date(),
+        public durationMinutes: number = 0,
+        public description: string = '',
+        public topRated: boolean = false
     ) {
 
     }

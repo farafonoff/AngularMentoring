@@ -1,0 +1,23 @@
+<div class='container'>
+  <form class='d-flex flex-column'>
+    <mat-form-field class="">
+      <input matInput placeholder="Title" [(ngModel)]="course.name" name="name">
+    </mat-form-field>
+    <mat-form-field class="">
+      <textarea matInput placeholder="Description" [(ngModel)]="course.description" name="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="">
+      <input matInput placeholder="Date" [(ngModel)]="course.createDate" name="createDate">
+    </mat-form-field>
+    <div class='row'>
+      <mat-form-field class='col-6'>
+        <input matInput placeholder="Duration" [(ngModel)]="course.durationMinutes" name="durationMinutes">
+      </mat-form-field>
+      <span class='col-6'>{{course.durationMinutes | formatDuration}}</span>
+    </div>
+    <div class='row'>
+      <button mat-raised-button class='col-2 mx-2' (click)="saveClick()">Save</button>
+      <button mat-raised-button class='col-2 mx-2' (click)="cancelClick()">Cancel</button>
+    </div>
+  </form>
+</div>

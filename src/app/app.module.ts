@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
@@ -17,6 +18,8 @@ import { FreshnessDirective } from './directives/freshness.directive';
 import { FormatDurationPipe } from './pipes/format-duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { FilterByPipe } from './pipes/filter-by.pipe';
+import { CourseAddComponent } from './pages/course-add/course-add.component';
+import {MatButtonModule, MatInputModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -32,11 +35,15 @@ import { FilterByPipe } from './pipes/filter-by.pipe';
     FreshnessDirective,
     FormatDurationPipe,
     OrderByPipe,
-    FilterByPipe
+    FilterByPipe,
+    CourseAddComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    BrowserAnimationsModule
   ],
   providers: [ CoursesService, AuthService ],
   bootstrap: [AppComponent]
