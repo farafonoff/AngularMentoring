@@ -19,7 +19,8 @@ import { FormatDurationPipe } from './pipes/format-duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { FilterByPipe } from './pipes/filter-by.pipe';
 import { CourseAddComponent } from './pages/course-add/course-add.component';
-import {MatButtonModule, MatInputModule} from '@angular/material';
+import { MatButtonModule, MatInputModule, MatDialogModule } from '@angular/material';
+import { CourseDeletePopupComponent } from './pages/courses/course-delete-popup/course-delete-popup.component';
 
 @NgModule({
   declarations: [
@@ -36,14 +37,19 @@ import {MatButtonModule, MatInputModule} from '@angular/material';
     FormatDurationPipe,
     OrderByPipe,
     FilterByPipe,
-    CourseAddComponent
+    CourseAddComponent,
+    CourseDeletePopupComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
+    MatDialogModule,
     MatButtonModule,
-    MatInputModule,
-    BrowserAnimationsModule
+    MatInputModule
+  ],
+  entryComponents: [
+    CourseDeletePopupComponent
   ],
   providers: [ CoursesService, AuthService ],
   bootstrap: [AppComponent]

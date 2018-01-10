@@ -6,7 +6,8 @@ import { FilterByPipe } from '../../pipes/filter-by.pipe';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
-declare var jQuery: any;
+import { MatDialog } from '@angular/material';
+import { CourseDeletePopupComponent } from './course-delete-popup/course-delete-popup.component';
 
 @Component({
   selector: 'app-courses',
@@ -16,14 +17,15 @@ declare var jQuery: any;
 export class CoursesComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   @ViewChild('deleteConfirm') deleteModal: ElementRef;
 
-  _deletingId;
   courses: Course[] = [];
   filter: string = null;
   filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   filterBy: FilterByPipe = new FilterByPipe();
   subscriptions = [];
 
-  constructor(private coursesService: CoursesService) {
+  constructor(private coursesService: CoursesService,
+    private dialog: MatDialog
+  ) {
     console.log('constructor');
   }
 
@@ -53,15 +55,16 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   deleteCourse(event: Course) {
-    this._deletingId = event.id;
-    jQuery(this.deleteModal.nativeElement).modal('show');
-    // this.coursesService.delete(event.id);
-  }
-
-  _callDeleteItem() {
-    console.log('deleting', this._deletingId);
-    this.coursesService.delete(this._deletingId);
-    jQuery(this.deleteModal.nativeElement).modal('hide');
+    const dialogRef = this.dialog.open(CourseDeletePopupComponent, {
+      data: {
+        course: event
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.coursesService.delete(event.id);
+      }
+    });
   }
 
   filterByString(filter) {
