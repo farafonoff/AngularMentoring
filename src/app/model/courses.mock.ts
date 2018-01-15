@@ -5,7 +5,6 @@ export function fakeCourses(): CourseFake[] {
     const result = [];
     for (let i = 0; i < 30; ++i) {
         const date = moment().subtract(i - 2, 'days');
-        console.log(date.fromNow());
         const course = new CourseFake(
             i,
             `Course${i}`,
