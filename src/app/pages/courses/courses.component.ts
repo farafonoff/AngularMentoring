@@ -37,8 +37,6 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   ngOnInit() {
     console.log('OnInit');
-    this.coursesService.getList().subscribe(l => console.log(l));
-    this.filterSubject.subscribe(l => console.log(l));
     this.subscriptions.push(
       Observable.combineLatest(
         this.coursesService.getList(),
