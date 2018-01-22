@@ -43,3 +43,6 @@ yarn-error.log
 Thumbs.db
 .editorconfig
 yarn.lock
+
+# mock server
+mock-server/node_modules

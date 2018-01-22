@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './pages/courses/courses.component';
@@ -21,6 +22,8 @@ import { FilterByPipe } from './pipes/filter-by.pipe';
 import { CourseAddComponent } from './pages/course-add/course-add.component';
 import { MatButtonModule, MatInputModule, MatDialogModule } from '@angular/material';
 import { CourseDeletePopupComponent } from './pages/courses/course-delete-popup/course-delete-popup.component';
+import { HttpAuthorized } from './services/http.authorized.service';
+import { CoursesBackendService } from './services/courses-backend.service';
 
 @NgModule({
   declarations: [
@@ -46,12 +49,13 @@ import { CourseDeletePopupComponent } from './pages/courses/course-delete-popup/
     BrowserAnimationsModule,
     MatDialogModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    HttpModule
   ],
   entryComponents: [
     CourseDeletePopupComponent
   ],
-  providers: [ CoursesService, AuthService ],
+  providers: [ CoursesService, AuthService, HttpAuthorized, CoursesBackendService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

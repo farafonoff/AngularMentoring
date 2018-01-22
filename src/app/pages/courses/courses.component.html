@@ -1,5 +1,9 @@
 <app-toolbox (findClick)="filterByString($event)"></app-toolbox>
 <div class='container'>
+    <div class='row'>
+      <button class='col-6 mat-raised-button' (click)="coursesService.prevPage()">&lt; PREV 10</button>
+      <button class='col-6 mat-raised-button mat-primary '  (click)="coursesService.nextPage()"> NEXT 10 &gt;</button>
+    </div>
   <div class='row my-5' *ngFor="let course of courses | orderBy:'createDate'">
     <div class='col-12'>
         <app-course-widget [course]="course" 

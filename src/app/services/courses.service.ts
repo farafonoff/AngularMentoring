@@ -4,48 +4,66 @@ import { fakeCourses } from '../model/courses.mock';
 import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { CoursesBackendService } from './courses-backend.service';
 
 @Injectable()
 export class CoursesService {
+  pageSize = 10;
+  start = 0;
+  outOfData = false;
+  filter = '';
   private dataSubject: BehaviorSubject<List<Course>>  = new BehaviorSubject<List<Course>>(List([]));
-  private data: List<Course> = List([]);
 
-  constructor() {
-    this.data = List(fakeCourses().map(course => {
-      return new Course(course.id,
-        course.name,
-        course.date,
-        course.durationMinutes,
-        course.description,
-        course.topRated);
-    }));
-    this.dataSubject.next(this.data);
-   }
+  constructor(private backend: CoursesBackendService) {
+  }
+
+  loadData() {
+    this.backend.fetchCourses(this.start, this.pageSize, this.filter).subscribe(data => {
+      console.log(data);
+      this.outOfData = data.count() < this.pageSize;
+      this.dataSubject.next(data);
+    });
+  }
 
   getList(): Observable<List<Course>> {
     return this.dataSubject;
   }
 
+  setFilter(filter) {
+    this.filter = filter;
+    this.loadData();
+  }
+
+  nextPage() {
+    if (!this.outOfData) {
+      this.start += this.pageSize;
+    }
+    this.loadData();
+  }
+
+  prevPage() {
+    this.start -= this.pageSize;
+    if (this.start <= 0) {
+      this.start = 0;
+    }
+    this.loadData();
+  }
+
   createCourse(val: Course) {
-    this.data = this.data.push(val);
-    this.dataSubject.next(this.data);
   }
 
   findById(id: number): Course {
-    return this.data.find(course => course.id === id);
+    return null;
   }
 
   update(val: Course) {
-    const idx = this.data.findIndex(course => course.id === val.id);
-    this.data = idx > -1
-      ? this.data.set(idx, val)
-      : this.data.push(val);
-    this.dataSubject.next(this.data);
   }
 
   delete(id: number) {
-    this.data = this.data.filterNot(course => course.id === id).toList();
-    this.dataSubject.next(this.data);
+    this.backend.deleteCourse(id).subscribe(result => {
+      console.log(result);
+      this.loadData();
+    });
   }
 
 }

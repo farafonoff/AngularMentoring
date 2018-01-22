@@ -37,19 +37,12 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
 
   ngOnInit() {
     console.log('OnInit');
-    this.subscriptions.push(
-      Observable.combineLatest(
-        this.coursesService.getList(),
-        this.filterSubject,
-        (list, filter) => {
-          let courses = list.toArray();
-          if (filter) {
-            courses = this.filterBy.transform(courses, filter);
-          }
-          return courses;
-        }).map(courses => courses.filter(course => moment(course.createDate).diff(moment(), 'days') > -14))
-        .subscribe(courses => { this.courses = courses; })
-    );
+    this.subscriptions.push(this.filterSubject.subscribe(filter => {
+      this.coursesService.setFilter(filter);
+    }));
+    this.subscriptions.push(this.coursesService.getList().subscribe(list => {
+      this.courses = list.toArray();
+    }));
   }
 
   ngOnDestroy() {
