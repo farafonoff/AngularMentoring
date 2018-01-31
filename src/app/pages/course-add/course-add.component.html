@@ -1,22 +1,24 @@
 <div class='container'>
-  <form class='d-flex flex-column'>
+  <form class='d-flex flex-column' #form="ngForm" (submit)="submit(form)">
     <mat-form-field class="">
-      <input matInput placeholder="Title" [(ngModel)]="course.name" name="name">
+      <input matInput placeholder="Title" name="name" #name="ngModel" [ngModel]="course.name" required maxlength="50">
+      <!--span class="error-display" *ngIf="name.invalid && name.dirty">{{name?.errors | json}}</span-->
     </mat-form-field>
     <mat-form-field class="">
-      <textarea matInput placeholder="Description" [(ngModel)]="course.description" name="description"></textarea>
+      <textarea matInput placeholder="Description" name="description" [ngModel]="course.description" required maxlength="500"></textarea>
     </mat-form-field>
     <mat-form-field class="">
-      <input matInput placeholder="Date" [(ngModel)]="course.createDate" name="createDate">
+      <input matInput placeholder="Date" name="createDate" [ngModel]="course.createDate" required>
     </mat-form-field>
     <div class='row'>
       <mat-form-field class='col-6'>
-        <input matInput placeholder="Duration" [(ngModel)]="course.durationMinutes" name="durationMinutes">
+        <input matInput placeholder="Duration" name="durationMinutes" #durationMinutes="ngModel" [ngModel]="course.durationMinutes" required>
       </mat-form-field>
-      <span class='col-6'>{{course.durationMinutes | formatDuration}}</span>
+      <span class='col-6'>{{durationMinutes.value | formatDuration}}</span>
     </div>
     <div class='row'>
-      <button mat-raised-button color="primary" class='col-2 mx-2' (click)="saveClick()">Save</button>
+      {{form.valid | json}}
+      <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="!form.valid" >Save</button>
       <button mat-button class='col-2 mx-2' (click)="cancelClick()">Cancel</button>
     </div>
   </form>

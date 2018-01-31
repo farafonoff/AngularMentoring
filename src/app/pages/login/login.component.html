@@ -1,13 +1,13 @@
 <div class='container-fluid'>
   <div class="row big align-items-center">
-    <div class="col-6 offset-3">
+    <form class="col-6 offset-3" #form="ngForm" submit="login(form)">
       <div class="form-group">
-        <input class='form-control' type='text' [(ngModel)]="login" placeholder="Login">
+        <input class='form-control' type='text' name="login" ngModel placeholder="Login" required>
       </div>
       <div class="form-group">
-        <input class='form-control' type='text' [(ngModel)]="password" placeholder="Password">
+        <input class='form-control' type='text' name="password" ngModel placeholder="Password" required>
       </div>
-      <button class="btn btn-primary" (click)="loginClick()">Login</button>
-    </div>
+      <button class="btn btn-primary" [disabled]="!form.valid" type="submit">Login</button>
+    </form>
   </div>  
 </div>

@@ -14,8 +14,12 @@ export class CourseAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  saveClick() {
-    console.log(this.course);
+  submit(form) {
+    console.log(form);
+    if (form.valid) {
+      this.course = form.value;
+      console.log(this.course);
+    }
   }
 
   cancelClick() {
