@@ -7,7 +7,7 @@
     <mat-form-field class="">
       <textarea matInput placeholder="Description" name="description" [ngModel]="course.description" required maxlength="500"></textarea>
     </mat-form-field>
-    <app-control-date [ngModel]="course.createDate" name="createDate" required></app-control-date>
+    <app-control-date [ngModel]="course.createDate" #createDate="ngModel" name="createDate" required></app-control-date>
     <span class="error-display" *ngIf="createDate.invalid && createDate.dirty">{{createDate?.errors | json}}</span>
     <div class='row'>
       <mat-form-field class='col-6'>
