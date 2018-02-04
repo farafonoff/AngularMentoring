@@ -60,7 +60,7 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
   }
 
   validate(c: AbstractControl): ValidationErrors {
-    let valid = !!this.innerValue.match('[0-9][0-9]/[0-9][0-9]/[0-9][0-9]([0-9][0-9])?');
+    let valid = !!this.innerValue.match('[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]');
     if (valid) {
       return null;
     } else {
@@ -69,18 +69,4 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
       };
     }
   }
-
-  /*//get accessor
-  get value(): any {
-    return this.innerValue;
-  };
-
-  //set accessor including call the onchange callback
-  set value(v: any) {
-    if (v !== this.innerValue) {
-      this.innerValue = v;
-      this.onChangeCallback(v);
-    }
-  }*/
-
 }
