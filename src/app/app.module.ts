@@ -24,7 +24,7 @@ import { MatButtonModule, MatInputModule, MatDialogModule } from '@angular/mater
 import { CourseDeletePopupComponent } from './pages/courses/course-delete-popup/course-delete-popup.component';
 import { HttpAuthorized } from './services/http.authorized.service';
 import { CoursesBackendService } from './services/courses-backend.service';
-import { ControlDateComponent } from './pages/couse-add/control-date/control-date.component';
+import { ControlDateComponent } from './pages/course-add/control-date/control-date.component';
 import { ControlDurationComponent } from './pages/course-add/control-duration/control-duration.component';
 import { ControlAuthorsComponent } from './pages/course-add/control-authors/control-authors.component';
 
