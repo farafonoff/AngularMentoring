@@ -1,3 +1,5 @@
+import { Author } from "./author.model";
+
 export class CourseFake {
     constructor(
         public id: number,
@@ -18,7 +20,8 @@ export class Course {
         public createDate: Date = new Date(),
         public durationMinutes: number = 0,
         public description: string = '',
-        public topRated: boolean = false
+        public topRated: boolean = false,
+        public authors: Author[] = []
     ) {
 
     }

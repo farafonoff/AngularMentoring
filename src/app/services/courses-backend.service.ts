@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Course } from '../model/course.model';
+import { Author } from '../model/author.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/takeLast';
 import { List } from 'immutable';
@@ -23,7 +24,8 @@ export class CoursesBackendService {
             course.date,
             course.length,
             course.description,
-            course.isTopRated
+            course.isTopRated,
+            course.authors.map(author => new Author(author.id, author.firstName, author.lastName))
           );
         });
         return List(mappedData);

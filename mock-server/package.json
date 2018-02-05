@@ -4,12 +4,14 @@
   "description": "Mock backend for Angular course",
   "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "forever -w index.js",
+    "run": "node index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.14.1",
+    "forever": "^0.15.3",
     "json-server": "^0.9.4",
     "lodash": "^4.17.4"
   }

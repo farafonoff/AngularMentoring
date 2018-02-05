@@ -27,6 +27,9 @@ import { CoursesBackendService } from './services/courses-backend.service';
 import { ControlDateComponent } from './pages/course-add/control-date/control-date.component';
 import { ControlDurationComponent } from './pages/course-add/control-duration/control-duration.component';
 import { ControlAuthorsComponent } from './pages/course-add/control-authors/control-authors.component';
+import { MinValueDirective } from './directives/min-value.directive';
+import { AuthorsService } from './services/authors.service';
+import { AuthorsBackendService } from './services/authors-backend.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,8 @@ import { ControlAuthorsComponent } from './pages/course-add/control-authors/cont
     CourseDeletePopupComponent,
     ControlDateComponent,
     ControlDurationComponent,
-    ControlAuthorsComponent
+    ControlAuthorsComponent,
+    MinValueDirective
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,7 @@ import { ControlAuthorsComponent } from './pages/course-add/control-authors/cont
   entryComponents: [
     CourseDeletePopupComponent
   ],
-  providers: [ CoursesService, AuthService, HttpAuthorized, CoursesBackendService ],
+  providers: [ CoursesService, AuthService, HttpAuthorized, AuthorsService, CoursesBackendService, AuthorsBackendService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

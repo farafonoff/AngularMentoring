@@ -1,0 +1,6 @@
+.scroll-wrapper {
+    height: 300px;
+    overflow-y: auto;
+
+    list-style-type: none;
+}

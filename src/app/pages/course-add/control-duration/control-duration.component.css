@@ -1,0 +1,3 @@
+:host(.ng-invalid.ng-dirty) .wrapper {
+    border: 1px solid red;
+}

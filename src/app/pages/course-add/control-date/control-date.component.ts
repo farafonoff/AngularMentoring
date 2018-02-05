@@ -28,7 +28,8 @@ export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
   providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATORS]
 })
 export class ControlDateComponent implements OnInit, ControlValueAccessor, Validator {
-  private innerValue: string = '';
+  private innerValue = '';
+  private isValid = false;
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
   
@@ -60,13 +61,22 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
   }
 
   validate(c: AbstractControl): ValidationErrors {
-    let valid = !!this.innerValue.match('[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]');
-    if (valid) {
+    if (this.isValid) {
       return null;
     } else {
       return {
         validDate: false
       };
     }
+  }
+
+  get value(): string {
+    return this.innerValue;
+  }
+
+  set value(val: string) {
+    this.isValid = !!val.match('[0-9][0-9]/[0-9][0-9]/[0-9][0-9][0-9][0-9]');
+    this.innerValue = val;
+    this.onChangeCallback(moment(this.innerValue, 'DD/MM/YYYY').toDate());
   }
 }

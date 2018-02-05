@@ -1,3 +1,11 @@
-<p>
-  control-authors works!
-</p>
+<div class="wrapper">
+  <p>Authors</p>
+  <ul class="scroll-wrapper">
+    <li *ngFor="let author of allAuthors" class="author">
+      <label>
+        <input type='checkbox'>
+        {{author.firstName}} {{author.lastName}}
+      </label>
+    </li>
+  </ul>
+</div>

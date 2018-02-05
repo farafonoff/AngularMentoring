@@ -1,3 +1,6 @@
-<p>
-  control-duration works!
-</p>
+<div class="wrapper">
+  <mat-form-field>
+    <input matInput placeholder="Duration" (change)="onChange($event)" (blur)="onBlur($event)" [(ngModel)]="value">
+  </mat-form-field>
+  <span>{{innerValue | formatDuration}}</span>
+</div>
