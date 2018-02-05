@@ -1,9 +1,8 @@
 <div class="wrapper">
-  <p>Authors</p>
   <ul class="scroll-wrapper">
     <li *ngFor="let author of allAuthors" class="author">
       <label>
-        <input type='checkbox'>
+        <input type='checkbox' (change)="toggleAuthor(author, $event)">
         {{author.firstName}} {{author.lastName}}
       </label>
     </li>

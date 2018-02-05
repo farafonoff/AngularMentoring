@@ -11,7 +11,12 @@ export class AuthorsService {
 
   constructor(private backend: AuthorsBackendService) {
     backend.fetchAuthors().subscribe(data => {
-      this.dataSubject.next(data);
+      const sorted = data.sort((author1, author2) => {
+        const s1 = `${author1.firstName} ${author1.lastName}`;
+        const s2 = `${author2.firstName} ${author2.lastName}`;
+        return s1.localeCompare(s2);
+      }).toList();
+      this.dataSubject.next(sorted);
     });
   }
 

@@ -2,20 +2,28 @@
   <form class='d-flex flex-column' #form="ngForm" (submit)="submit(form)">
     <mat-form-field class="">
       <input matInput placeholder="Title" name="name" #name="ngModel" [ngModel]="course.name" required maxlength="50">
-      <!--span class="error-display" *ngIf="name.invalid && name.dirty">{{name?.errors | json}}</span-->
     </mat-form-field>
+    <span class="error-display" *ngIf="name.invalid && name.dirty">{{name?.errors | json}}</span>
     <mat-form-field class="">
-      <textarea matInput placeholder="Description" name="description" [ngModel]="course.description" required maxlength="500"></textarea>
+      <textarea matInput #description="ngModel" placeholder="Description" name="description" [ngModel]="course.description" required maxlength="500"></textarea>
     </mat-form-field>
+    <span class="error-display" *ngIf="description.invalid && description.dirty">{{description?.errors | json}}</span>
     <app-control-date [ngModel]="course.createDate" #createDate="ngModel" name="createDate" required></app-control-date>
-    <span class="error-display" *ngIf="createDate.invalid && createDate.dirty">{{createDate?.errors | json}}</span>
+    <span class="error-display" *ngIf="createDate.invalid && (createDate.dirty || form.submitted)">{{createDate?.errors | json}}</span>
     <app-control-duration [ngModel]="course.durationMinutes" #durationMinutes="ngModel" name="durationMinutes" required appMinValue="1"></app-control-duration>
-    <span class="error-display" *ngIf="durationMinutes.invalid && durationMinutes.dirty">{{durationMinutes?.errors | json}}</span>
+    <span class="error-display" *ngIf="durationMinutes.invalid && (durationMinutes.dirty || form.submitted)">{{durationMinutes?.errors | json}}</span>
+    <p>Authors:
+      <span *ngFor="let author of authors.value; let last = last;">
+        {{author.firstName}} {{author.lastName}}<!--
+        --><span *ngIf="!last">, </span>
+      </span>
+    </p>
     <app-control-authors required #authors="ngModel" [ngModel]="course.authors" name="authors" [allAuthors]="allAuthors">
 
     </app-control-authors>
+    <span class="error-display" *ngIf="authors.invalid && (authors.dirty || form.submitted)">{{authors?.errors | json}}</span>
     <div class='row'>
-      <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="!form.valid" >Save</button>
+      <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="form.invalid">Save</button>
       <button mat-button class='col-2 mx-2' (click)="cancelClick()">Cancel</button>
     </div>
   </form>

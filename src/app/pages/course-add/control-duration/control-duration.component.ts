@@ -63,7 +63,7 @@ export class ControlDurationComponent implements OnInit, ControlValueAccessor, V
 
   validate(c: AbstractControl): ValidationErrors {
     return this.valid ? null : {
-      validDuration: true
+      validDuration: 'number'
     };
   }
 

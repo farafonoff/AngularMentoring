@@ -9,17 +9,19 @@ import {
   ValidationErrors
 } from '@angular/forms';
 import { noop } from 'lodash';
+import * as _ from 'lodash';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ControlAuthorsComponent),
   multi: true
-}
+};
+
 export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => ControlAuthorsComponent),
   multi: true
-}
+};
 
 @Component({
   selector: 'app-control-authors',
@@ -29,7 +31,7 @@ export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
 })
 export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Validator {
   @Input() allAuthors = [];
-  private innerValue = [];
+  private selectedAuthors = [];
   private isValid = false;
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
@@ -38,7 +40,7 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
 
   writeValue(obj: any): void {
     console.log('writeValue ', obj);
-    this.innerValue = obj;
+    this.selectedAuthors = obj;
   }
   registerOnChange(fn: any): void {
     this.onChangeCallback = fn;
@@ -55,5 +57,15 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
 
   validate(c: AbstractControl): ValidationErrors {
     return null;
+  }
+
+  toggleAuthor(author, event) {
+    if (!event.target.checked) {
+      _.remove(this.selectedAuthors, author);
+    } else {
+      this.selectedAuthors.push(author);
+    }
+    this.onChangeCallback(this.selectedAuthors);
+    this.onTouchedCallback();
   }
 }

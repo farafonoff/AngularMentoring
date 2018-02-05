@@ -15,12 +15,14 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ControlDateComponent),
   multi: true
-}
+};
+
 export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => ControlDateComponent),
   multi: true
-}
+};
+
 @Component({
   selector: 'app-control-date',
   templateUrl: './control-date.component.html',
@@ -32,10 +34,9 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
   private isValid = false;
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
-  
   writeValue(obj: any): void {
     console.log('writeValue ', obj);
-    this.innerValue = moment(obj).format('DD/MM/YYYY');
+    this.value = moment(obj).format('DD/MM/YYYY');
   }
   registerOnChange(fn: any): void {
     this.onChangeCallback = fn;
@@ -65,7 +66,7 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
       return null;
     } else {
       return {
-        validDate: false
+        validDate: 'DD/MM/YYYY'
       };
     }
   }
