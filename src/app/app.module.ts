@@ -32,17 +32,19 @@ import { ControlAuthorsComponent } from './pages/course-add/control-authors/cont
 import { MinValueDirective } from './directives/min-value.directive';
 import { AuthorsService } from './services/authors.service';
 import { AuthorsBackendService } from './services/authors-backend.service';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AuthGuard } from './services/auth-guard';
 
 export const ROUTES: Routes = [
   { path: '',
     redirectTo: '/courses',
     pathMatch: 'full'
   },
-  { path: '/login', component: LoginComponent },
-  { path: '/courses', component: CoursesComponent, pathMatch: 'full' },
-  { path: '/courses/:id', component: CourseAddComponent },
-  { path: '/courses/new', component: CourseAddComponent },
-  { path: '**' }
+  { path: 'login', component: LoginComponent },
+  { path: 'courses', component: CoursesComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'courses/:id', component: CourseAddComponent, canActivate: [AuthGuard] },
+  { path: 'courses/new', component: CourseAddComponent, canActivate: [AuthGuard] },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
@@ -65,7 +67,8 @@ export const ROUTES: Routes = [
     ControlDateComponent,
     ControlDurationComponent,
     ControlAuthorsComponent,
-    MinValueDirective
+    MinValueDirective,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,7 @@ export const ROUTES: Routes = [
   entryComponents: [
     CourseDeletePopupComponent
   ],
-  providers: [ CoursesService, AuthService, HttpAuthorized, AuthorsService, CoursesBackendService, AuthorsBackendService ],
+  providers: [ CoursesService, AuthService, HttpAuthorized, AuthorsService, CoursesBackendService, AuthorsBackendService, AuthGuard ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

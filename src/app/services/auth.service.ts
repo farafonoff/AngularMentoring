@@ -36,15 +36,13 @@ export class AuthService {
      });
    }
 
-  login(user: string, password: string) {
-    this.http.post('http://localhost:3004/auth/login', {
+  login(user: string, password: string): Observable<any> {
+    return this.http.post('http://localhost:3004/auth/login', {
       login: user,
       password: password
-    }).subscribe(response => {
+    }).do((response) => {
       this.authToken.next(response.json().token);
-    }, error => {
-      alert(error.text());
-    });
+    }).map(response => true);
   }
 
   logout() {
