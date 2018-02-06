@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Route, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './pages/courses/courses.component';
@@ -30,6 +31,18 @@ import { ControlAuthorsComponent } from './pages/course-add/control-authors/cont
 import { MinValueDirective } from './directives/min-value.directive';
 import { AuthorsService } from './services/authors.service';
 import { AuthorsBackendService } from './services/authors-backend.service';
+
+export const ROUTES: Routes = [
+  { path: '',
+    redirectTo: '/courses',
+    pathMatch: 'full'
+  },
+  { path: '/login', component: LoginComponent },
+  { path: '/courses', component: CoursesComponent, pathMatch: 'full' },
+  { path: '/courses/:id', component: CourseAddComponent },
+  { path: '/courses/new', component: CourseAddComponent },
+  { path: '**' }
+];
 
 @NgModule({
   declarations: [
@@ -60,7 +73,11 @@ import { AuthorsBackendService } from './services/authors-backend.service';
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    HttpModule
+    HttpModule,
+    RouterModule.forRoot(
+      ROUTES,
+      { enableTracing: true } // <-- debugging purposes only
+    )
   ],
   entryComponents: [
     CourseDeletePopupComponent
