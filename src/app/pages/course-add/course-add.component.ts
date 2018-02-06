@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Course } from '../../model/course.model';
 import { AuthorsService } from '../../services/authors.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ControlDateComponent } from './control-date/control-date.component';
 
 @Component({
   selector: 'app-course-add',
@@ -12,6 +14,18 @@ export class CourseAddComponent implements OnInit, OnDestroy {
   course: Course = new Course();
   allAuthors = [];
   subscriptions = [];
+
+  courseForm = new FormGroup({
+        name: new FormControl(this.course.name, [Validators.required, Validators.maxLength(50)]),
+        description: new FormControl(this.course.description, [Validators.required, Validators.maxLength(500)]),
+        createDate: new FormControl(this.course.createDate, [Validators.required]),
+        durationMinutes: new FormControl(this.course.durationMinutes, [Validators.required]),
+        authors: new FormControl(this.course.authors, [Validators.required])
+  });
+
+  dirtyAndInvalid(controlName: string) {
+    return this.courseForm.get(controlName).dirty && this.courseForm.get(controlName).status === 'INVALID';
+  }
 
   constructor(private authorsService: AuthorsService) {
     this.subscriptions.push(authorsService.getList().subscribe(authors => {
@@ -26,10 +40,9 @@ export class CourseAddComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach(fn => fn());
   }
 
-  submit(form) {
-    console.log(form);
-    if (form.valid) {
-      this.course = form.value;
+  submit() {
+    if (this.courseForm.valid) {
+      this.course = this.courseForm.value;
       console.log(this.course);
     }
   }

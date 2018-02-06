@@ -1,29 +1,35 @@
 <div class='container'>
-  <form class='d-flex flex-column' #form="ngForm" (submit)="submit(form)">
+  <form class='d-flex flex-column' [formGroup]="courseForm" novalidate (ngSubmit)="submit()">
     <mat-form-field class="">
-      <input matInput placeholder="Title" name="name" #name="ngModel" [ngModel]="course.name" required maxlength="50">
+      <input matInput placeholder="Title" formControlName="name">
     </mat-form-field>
-    <span class="error-display" *ngIf="name.invalid && name.dirty">{{name?.errors | json}}</span>
+    <span class="error-display" *ngIf="dirtyAndInvalid('name')">{{courseForm.get('name').errors | json}}</span>
     <mat-form-field class="">
-      <textarea matInput #description="ngModel" placeholder="Description" name="description" [ngModel]="course.description" required maxlength="500"></textarea>
+      <textarea matInput formControlName="description" placeholder="Description"></textarea>
     </mat-form-field>
-    <span class="error-display" *ngIf="description.invalid && description.dirty">{{description?.errors | json}}</span>
-    <app-control-date [ngModel]="course.createDate" #createDate="ngModel" name="createDate" required></app-control-date>
-    <span class="error-display" *ngIf="createDate.invalid && (createDate.dirty || form.submitted)">{{createDate?.errors | json}}</span>
-    <app-control-duration [ngModel]="course.durationMinutes" #durationMinutes="ngModel" name="durationMinutes" required appMinValue="1"></app-control-duration>
-    <span class="error-display" *ngIf="durationMinutes.invalid && (durationMinutes.dirty || form.submitted)">{{durationMinutes?.errors | json}}</span>
+    <span class="error-display" *ngIf="dirtyAndInvalid('description')">{{courseForm.get('description').errors | json}}</span>
+    <!-- <span class="error-display" *ngIf="courseForm.get('description').invalid && courseForm.get('description').dirty">{{description?.errors | json}}</span> -->
+    <app-control-date formControlName="createDate"></app-control-date>
+    <span class="error-display" *ngIf="dirtyAndInvalid('createDate')">{{courseForm.get('createDate').errors | json}}</span>
+    <!-- <span class="error-display" *ngIf="createDate.invalid && (createDate.dirty || form.submitted)">{{createDate?.errors | json}}</span> -->
+    <app-control-duration formControlName="durationMinutes" appMinValue="1"></app-control-duration>
+    <span class="error-display" *ngIf="dirtyAndInvalid('durationMinutes')">{{courseForm.get('durationMinutes').errors | json}}</span>
+    <!-- <span class="error-display" *ngIf="durationMinutes.invalid && (durationMinutes.dirty || form.submitted)">{{durationMinutes?.errors | json}}</span> -->
     <p>Authors:
-      <span *ngFor="let author of authors.value; let last = last;">
+      <span *ngFor="let author of courseForm.value.authors; let last = last;">
         {{author.firstName}} {{author.lastName}}<!--
         --><span *ngIf="!last">, </span>
       </span>
     </p>
-    <app-control-authors required #authors="ngModel" [ngModel]="course.authors" name="authors" [allAuthors]="allAuthors">
+    <app-control-authors formControlName="authors" [allAuthors]="allAuthors">
 
     </app-control-authors>
-    <span class="error-display" *ngIf="authors.invalid && (authors.dirty || form.submitted)">{{authors?.errors | json}}</span>
+    <span class="error-display" *ngIf="dirtyAndInvalid('authors')">{{courseForm.get('authors').errors | json}}</span>
+    <!-- <span class="error-display" *ngIf="authors.invalid && (authors.dirty || form.submitted)">{{authors?.errors | json}}</span> -->
+    <p>Form value: {{ courseForm.value | json }}</p>
+    <p>Form status: {{ courseForm.status | json }}</p>
     <div class='row'>
-      <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="form.invalid">Save</button>
+      <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="courseForm.status === 'INVALID'">Save</button>
       <button mat-button class='col-2 mx-2' (click)="cancelClick()">Cancel</button>
     </div>
   </form>

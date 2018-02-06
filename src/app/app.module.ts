@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Route, Routes } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './pages/courses/courses.component';
@@ -74,6 +75,7 @@ export const ROUTES: Routes = [
     MatButtonModule,
     MatInputModule,
     HttpModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(
       ROUTES,
       { enableTracing: true } // <-- debugging purposes only
