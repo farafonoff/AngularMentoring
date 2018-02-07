@@ -14,6 +14,7 @@ export class AuthService {
   authUser = new ReplaySubject<User>(1);
   constructor(private http: Http, private httpAuth: HttpAuthorized) {
     this.authToken.subscribe(token => {// save to LS
+      console.log('====AUTH TOKEN====', token);
       if (token != null) {
         localStorage.setItem(AUTH_STORAGE_KEY, token);
         this.fetchUserInfo();
@@ -23,7 +24,9 @@ export class AuthService {
       }
     });
     if (!!localStorage.getItem(AUTH_STORAGE_KEY)) {
-      this.fetchUserInfo();
+      this.authToken.next(localStorage.getItem(AUTH_STORAGE_KEY));
+    } else {
+      this.authToken.next(null);
     }
    }
 
@@ -50,7 +53,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.authUser.map(u => !!u);
+    return this.authToken.map(u => !!u);
   }
 
   getUserInfo(): Observable<User> {
