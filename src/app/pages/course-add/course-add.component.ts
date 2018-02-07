@@ -70,12 +70,12 @@ export class CourseAddComponent implements OnInit, OnDestroy {
         const course = Object.assign({}, this.courseForm.value, { id: this.courseId });
         this.coursesService.update(course);
       }
-      this.location.back();
+      this.router.navigate(['courses']);
     }
   }
 
   cancelClick() {
-    this.location.back();
+    this.router.navigate(['courses']);
   }
 
 }
