@@ -33,10 +33,9 @@ export class ControlDurationComponent implements OnInit, ControlValueAccessor, V
   private valid = false;
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
-  
+
   writeValue(obj: any): void {
-    console.log('writeValue ', obj);
-    
+    this.value = obj;
   }
   registerOnChange(fn: any): void {
     this.onChangeCallback = fn;

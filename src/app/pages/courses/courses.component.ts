@@ -46,7 +46,7 @@ export class CoursesComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach(unsubscribe => unsubscribe());
+    this.subscriptions.forEach(subscriber => subscriber.unsubscribe());
   }
 
   ngDoCheck() {

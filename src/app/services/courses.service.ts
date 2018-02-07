@@ -52,8 +52,8 @@ export class CoursesService {
   createCourse(val: Course) {
   }
 
-  findById(id: number): Course {
-    return null;
+  findById(id: number): Observable<Course> {
+    return this.backend.fetchCourse(id);
   }
 
   update(val: Course) {

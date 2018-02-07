@@ -68,4 +68,8 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
     this.onChangeCallback(this.selectedAuthors);
     this.onTouchedCallback();
   }
+
+  isAuthorSelected(author): boolean {
+    return !!_.find(this.selectedAuthors, author);
+  }
 }

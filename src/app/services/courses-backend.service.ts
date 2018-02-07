@@ -32,6 +32,25 @@ export class CoursesBackendService {
       });
   }
 
+  fetchCourse(id): Observable<Course> {
+    console.log('fetch');
+    return this.http.get(`http://localhost:3004/courses/${id}`)
+      .map(response => {
+        const course = response.json();
+        const mappedData = new Course(
+          course.id,
+          course.name,
+          course.date,
+          course.length,
+          course.description,
+          course.isTopRated,
+          course.authors.map(author => new Author(author.id, author.firstName, author.lastName))
+        );
+        return mappedData;
+      });
+  }
+
+
   deleteCourse(id): Observable<any> {
     return this.http.delete(`http://localhost:3004/courses/${id}`);
   }

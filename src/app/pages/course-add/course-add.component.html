@@ -26,7 +26,7 @@
     </app-control-authors>
     <span class="error-display" *ngIf="dirtyAndInvalid('authors')">{{courseForm.get('authors').errors | json}}</span>
     <!-- <span class="error-display" *ngIf="authors.invalid && (authors.dirty || form.submitted)">{{authors?.errors | json}}</span> -->
-    <p>Form value: {{ courseForm.value | json }}</p>
+    <!-- <p>Form value: {{ courseForm.value | json }}</p> -->
     <p>Form status: {{ courseForm.status | json }}</p>
     <div class='row'>
       <button mat-raised-button color="primary" class='col-2 mx-2' type="submit" [disabled]="courseForm.status === 'INVALID'">Save</button>
