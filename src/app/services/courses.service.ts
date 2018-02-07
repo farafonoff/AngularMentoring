@@ -49,14 +49,16 @@ export class CoursesService {
     this.loadData();
   }
 
-  createCourse(val: Course) {
+  create(val: Course) {
+    this.backend.create(val).subscribe(() => this.loadData());
+  }
+
+  update(val: Course) {
+    this.backend.update(val).subscribe(() => this.loadData());
   }
 
   findById(id: number): Observable<Course> {
     return this.backend.fetchCourse(id);
-  }
-
-  update(val: Course) {
   }
 
   delete(id: number) {

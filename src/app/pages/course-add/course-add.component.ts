@@ -19,6 +19,7 @@ export class CourseAddComponent implements OnInit, OnDestroy {
   allAuthors = [];
   subscriptions = [];
   isNew: boolean;
+  courseId: number;
   courseForm = this.buildForm(new Course());
 
   constructor(
@@ -34,7 +35,8 @@ export class CourseAddComponent implements OnInit, OnDestroy {
     .subscribe(config => {
       this.isNew = config[0];
       if (!this.isNew) {
-        coursesService.findById(config[1]).subscribe((course) => this.courseForm.reset(course));
+        this.courseId = config[1];
+        coursesService.findById(this.courseId).subscribe((course) => this.courseForm.reset(course));
       }
     });
   }
@@ -62,8 +64,13 @@ export class CourseAddComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.courseForm.valid) {
-      this.course = this.courseForm.value;
-      console.log(this.course);
+      if (this.isNew) {
+        this.coursesService.create(this.courseForm.value);
+      } else {
+        const course = Object.assign({}, this.courseForm.value, { id: this.courseId });
+        this.coursesService.update(course);
+      }
+      this.location.back();
     }
   }
 
