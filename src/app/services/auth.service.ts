@@ -3,49 +3,54 @@ import { User } from '../model/user.model';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/mergeMap';
 import { Http } from '@angular/http';
 import { HttpAuthorized } from './http.authorized.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export const AUTH_STORAGE_KEY = 'auth_token';
 
 @Injectable()
 export class AuthService {
-  authToken = new ReplaySubject<string>(1);
+  authToken = new BehaviorSubject<string>(localStorage.getItem(AUTH_STORAGE_KEY));
   authUser = new ReplaySubject<User>(1);
   constructor(private http: Http, private httpAuth: HttpAuthorized) {
-    this.authToken.subscribe(token => {// save to LS
-      console.log('====AUTH TOKEN====', token);
-      if (token != null) {
-        localStorage.setItem(AUTH_STORAGE_KEY, token);
-        this.fetchUserInfo();
+    this.authUser.subscribe((user) => {
+      console.log('===== AUTH USER ====', user);
+    });
+    this.authToken
+      .subscribe(token => {
+        console.log('====AUTH TOKEN====', token);
+        if (token != null) {
+          localStorage.setItem(AUTH_STORAGE_KEY, token);
+        } else {
+          localStorage.removeItem(AUTH_STORAGE_KEY);
+        }
+      });
+      if (this.authToken.getValue()) {
+        this.fetchUserInfo().subscribe();
       } else {
-        localStorage.removeItem(AUTH_STORAGE_KEY);
         this.authUser.next(null);
       }
-    });
-    if (!!localStorage.getItem(AUTH_STORAGE_KEY)) {
-      this.authToken.next(localStorage.getItem(AUTH_STORAGE_KEY));
-    } else {
-      this.authToken.next(null);
-    }
    }
 
-   fetchUserInfo() {
-     this.httpAuth.post('http://localhost:3004/auth/userinfo', {})
-     .subscribe((response) => {
-       const json = response.json();
-       const user = new User(json.login, json.password);
-       this.authUser.next(user);
-     });
-   }
+  private fetchUserInfo(): Observable<User> {
+    return this.httpAuth.post('http://localhost:3004/auth/userinfo', {})
+      .map((response) => {
+        const json = response.json();
+        const user = new User(json.login, json.password);
+        return user;
+      }).do(user => this.authUser.next(user));
+  }
 
-  login(user: string, password: string): Observable<any> {
+  login(user: string, password: string): Observable<User> {
     return this.http.post('http://localhost:3004/auth/login', {
       login: user,
       password: password
     }).do((response) => {
       this.authToken.next(response.json().token);
-    }).map(response => true);
+    }).flatMap(() => this.fetchUserInfo());
   }
 
   logout() {
@@ -53,7 +58,7 @@ export class AuthService {
   }
 
   isAuthenticated(): Observable<boolean> {
-    return this.authToken.map(u => !!u);
+    return this.authUser.map(u => !!u);
   }
 
   getUserInfo(): Observable<User> {
