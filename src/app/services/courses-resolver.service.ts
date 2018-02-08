@@ -14,7 +14,7 @@ export class CoursesResolverService implements Resolve<Course> {
     return this.coursesService
       .findById(id)
       .catch(error => {
-        this.router.navigate(['/missing-course']);
+        this.router.navigate(['courses', 'missing-course']);
         return Observable.of(null);
       });
   }

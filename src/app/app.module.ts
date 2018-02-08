@@ -50,6 +50,10 @@ export const ROUTES: Routes = [
         data: { new: true }
       },
       {
+        path: 'missing-course',
+        component: NotFoundComponent
+      },
+      {
         path: ':id',
         component: CourseAddComponent,
         data: { new: false },
