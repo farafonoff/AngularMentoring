@@ -1,0 +1,11 @@
+<span>
+  <span *ngFor="let crumb of breadcrumbs; let last=last">
+    <span *ngIf="!last">
+      <a [routerLink]="crumb.path">{{crumb.title}}</a>
+      &gt;
+    </span>
+    <span *ngIf="last">
+      {{crumb.title}}
+    </span>
+  </span>
+</span>

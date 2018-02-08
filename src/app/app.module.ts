@@ -34,16 +34,38 @@ import { AuthorsService } from './services/authors.service';
 import { AuthorsBackendService } from './services/authors-backend.service';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard';
+import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
+import { CoursesListComponent } from './pages/courses/courses-list/courses-list.component';
+import { CoursesResolverService } from './services/courses-resolver.service';
 
 export const ROUTES: Routes = [
+  {
+    path: 'courses',
+    component: CoursesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'new',
+        component: CourseAddComponent,
+        data: { new: true }
+      },
+      {
+        path: ':id',
+        component: CourseAddComponent,
+        data: { new: false },
+        resolve: { course: CoursesResolverService }
+      },
+      {
+        path: '',
+        component: CoursesListComponent
+      }
+    ]
+  },
   { path: '',
     redirectTo: '/courses',
     pathMatch: 'full'
   },
   { path: 'login', component: LoginComponent },
-  { path: 'courses', component: CoursesComponent, pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: 'courses/new', component: CourseAddComponent, canActivate: [AuthGuard], pathMatch: 'full', data: { new: true } },
-  { path: 'courses/:id', component: CourseAddComponent, canActivate: [AuthGuard], data: { new: false } },
   { path: '**', component: NotFoundComponent }
 ];
 
@@ -68,7 +90,9 @@ export const ROUTES: Routes = [
     ControlDurationComponent,
     ControlAuthorsComponent,
     MinValueDirective,
-    NotFoundComponent
+    NotFoundComponent,
+    BreadcrumbComponent,
+    CoursesListComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +111,11 @@ export const ROUTES: Routes = [
   entryComponents: [
     CourseDeletePopupComponent
   ],
-  providers: [ CoursesService, AuthService, HttpAuthorized, AuthorsService, CoursesBackendService, AuthorsBackendService, AuthGuard ],
+  providers: [CoursesService,
+    AuthService, HttpAuthorized,
+    AuthorsService, CoursesBackendService,
+    AuthorsBackendService, AuthGuard,
+    CoursesResolverService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

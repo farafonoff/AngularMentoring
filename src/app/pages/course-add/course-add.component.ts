@@ -31,12 +31,10 @@ export class CourseAddComponent implements OnInit, OnDestroy {
     this.subscriptions.push(authorsService.getList().subscribe(authors => {
       this.allAuthors = authors.toArray();
     }));
-    route.data.combineLatest(route.params, (data, params) => [data.new, params.id])
-    .subscribe(config => {
-      this.isNew = config[0];
-      if (!this.isNew) {
-        this.courseId = config[1];
-        coursesService.findById(this.courseId).subscribe((course) => this.courseForm.reset(course));
+    route.data.subscribe(data => {
+      if (!data.new) {
+        this.courseId = data.course.id;
+        this.courseForm.reset(data.course);
       }
     });
   }

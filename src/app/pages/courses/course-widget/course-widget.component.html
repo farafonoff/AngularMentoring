@@ -10,7 +10,7 @@
     {{course.description}}
   </div>
   <div class='card-body'>
-    <button class='btn btn-primary' [routerLink]="[course.id]">Edit course</button>
+    <button class='btn btn-primary' [routerLink]="['./', course.id]">Edit course</button>
     <button class='btn btn-danger' (click)='delClick()'>Delete</button>
   </div>
   <div class="card-footer text-muted">

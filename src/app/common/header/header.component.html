@@ -2,7 +2,7 @@
   <div class='row align-items-center'>
     <app-logo class='col-auto'></app-logo>
     <div class='breadcrumbs col' *ngIf="isLoggedIn">
-
+      <app-breadcrumb></app-breadcrumb>
     </div>
     <div class='login-placeholder col-auto' *ngIf="isLoggedIn">
       {{user?.login}}
