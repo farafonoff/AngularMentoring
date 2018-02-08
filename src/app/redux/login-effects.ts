@@ -24,7 +24,9 @@ export class LoginEffects {
             if (token) {
                 return this.loadUserInfo(token);
             } else {
-                return Observable.empty();
+                return Observable.of({
+                    type: loginReducer.LOGOUT
+                });
             }
         });
 

@@ -7,6 +7,7 @@ import { RouterModule, Route, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { loginReducer } from './redux/login.reducer';
 import { LoginEffects } from './redux/login-effects';
@@ -119,6 +120,9 @@ export const ROUTES: Routes = [
     ),
     StoreModule.forRoot({
       login: loginReducer
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 5
     }),
     EffectsModule.forRoot([LoginEffects])
   ],
