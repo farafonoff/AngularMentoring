@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http, XHRBackend, RequestOptions, Request, RequestOptionsArgs, Response, Headers} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
-import { AUTH_STORAGE_KEY } from './auth.service';
+
+export const AUTH_STORAGE_KEY = 'auth_token';
 
 @Injectable()
 export class HttpAuthorized extends Http {

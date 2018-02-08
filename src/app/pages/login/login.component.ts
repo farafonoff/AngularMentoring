@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/withLatestFrom';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as loginReducer from '../../redux/login.reducer';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService, private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private store: Store<any>) {
   }
 
   ngOnInit() {
@@ -19,12 +20,13 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     if (form.valid) {
-      this.authService.login(form.value.login, form.value.password)
+      this.store.dispatch( { type: loginReducer.LOGIN, payload: form.value });
+      /*this.authService.login(form.value.login, form.value.password)
       .withLatestFrom(this.route.params, (login, params) => {
         if (params.back) {
           this.router.navigate([params.back]);
         }
-      }).subscribe();
+      }).subscribe();*/
     }
   }
 

@@ -5,6 +5,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Route, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+
+import { loginReducer } from './redux/login.reducer';
+import { LoginEffects } from './redux/login-effects';
 
 import { AppComponent } from './app.component';
 import { CoursesComponent } from './pages/courses/courses.component';
@@ -37,6 +42,7 @@ import { AuthGuard } from './services/auth-guard';
 import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { CoursesListComponent } from './pages/courses/courses-list/courses-list.component';
 import { CoursesResolverService } from './services/courses-resolver.service';
+import { AuthBackendService } from './services/auth-backend.service';
 
 export const ROUTES: Routes = [
   {
@@ -110,7 +116,11 @@ export const ROUTES: Routes = [
     RouterModule.forRoot(
       ROUTES,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    StoreModule.forRoot({
+      login: loginReducer
+    }),
+    EffectsModule.forRoot([LoginEffects])
   ],
   entryComponents: [
     CourseDeletePopupComponent
@@ -119,7 +129,7 @@ export const ROUTES: Routes = [
     AuthService, HttpAuthorized,
     AuthorsService, CoursesBackendService,
     AuthorsBackendService, AuthGuard,
-    CoursesResolverService],
+    CoursesResolverService, AuthBackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
