@@ -5,6 +5,8 @@ import { List } from 'immutable';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { CoursesBackendService } from './courses-backend.service';
+import { State } from '../redux/index';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class CoursesService {
@@ -14,7 +16,12 @@ export class CoursesService {
   filter = '';
   private dataSubject: BehaviorSubject<List<Course>>  = new BehaviorSubject<List<Course>>(List([]));
 
-  constructor(private backend: CoursesBackendService) {
+  constructor(private backend: CoursesBackendService, private store: Store<State>) {
+  }
+
+  rxGetData(): Observable<Course[]> {
+    return Observable.of();
+    // return this.store.select('courses').map()
   }
 
   loadData() {

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { User } from '../../model/user.model';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { State } from '../../redux/index';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { LOGOUT } from '../../redux/login.reducer';
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-header',
