@@ -43,6 +43,7 @@ import { BreadcrumbComponent } from './common/breadcrumb/breadcrumb.component';
 import { CoursesListComponent } from './pages/courses/courses-list/courses-list.component';
 import { CoursesResolverService } from './services/courses-resolver.service';
 import { AuthBackendService } from './services/auth-backend.service';
+import { CoursesEffects } from './redux/courses.effects';
 
 export const ROUTES: Routes = [
   {
@@ -121,7 +122,7 @@ export const ROUTES: Routes = [
     StoreDevtoolsModule.instrument({
       maxAge: 5
     }),
-    EffectsModule.forRoot([LoginEffects])
+    EffectsModule.forRoot([LoginEffects, CoursesEffects])
   ],
   entryComponents: [
     CourseDeletePopupComponent
@@ -130,7 +131,7 @@ export const ROUTES: Routes = [
     HttpAuthorized,
     AuthorsService, CoursesBackendService,
     AuthorsBackendService, AuthGuard,
-    CoursesResolverService, AuthBackendService],
+    CoursesResolverService, AuthBackendService, CoursesEffects],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

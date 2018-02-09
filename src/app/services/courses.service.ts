@@ -27,8 +27,8 @@ export class CoursesService {
   loadData() {
     this.backend.fetchCourses(this.start, this.pageSize, this.filter).subscribe(data => {
       console.log(data);
-      this.outOfData = data.count() < this.pageSize;
-      this.dataSubject.next(data);
+      this.outOfData = data.length < this.pageSize;
+      this.dataSubject.next(List(data));
     });
   }
 

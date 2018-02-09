@@ -1,17 +1,17 @@
 <app-toolbox (findClick)="filterByString($event)"></app-toolbox>
 <div class='container'>
     <div class='row'>
-      <button class='col-6 mat-raised-button' (click)="coursesService.prevPage()">&lt; PREV 10</button>
-      <button class='col-6 mat-raised-button mat-primary '  (click)="coursesService.nextPage()"> NEXT 10 &gt;</button>
+      <button class='col-6 mat-raised-button' (click)="prevPage()">&lt; PREV 10</button>
+      <button class='col-6 mat-raised-button mat-primary '  (click)="nextPage()"> NEXT 10 &gt;</button>
     </div>
-  <div class='row my-5' *ngFor="let course of courses | orderBy:'createDate'">
+  <div class='row my-5' *ngFor="let course of ((state | async).data || []) | orderBy:'createDate'">
     <div class='col-12'>
         <app-course-widget [course]="course" 
         (delete)="deleteCourse($event)"
         ></app-course-widget>
     </div>
   </div>
-  <div class='row my-5' *ngIf="!courses?.length">
+  <div class='row my-5' *ngIf="(state | async).data?.length == 0">
     <div class='col-12 text-center alert alert-info'>
       No data. Feel free to add new course.
     </div>  

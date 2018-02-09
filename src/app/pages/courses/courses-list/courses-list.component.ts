@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Course } from '../../../model/course.model';
-import { CoursesService } from '../../../services/courses.service';
 import { OnChanges, DoCheck, OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FilterByPipe } from '../../../pipes/filter-by.pipe';
 import { Subject } from 'rxjs/Subject';
@@ -11,44 +10,28 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import * as moment from 'moment';
 import { MatDialog } from '@angular/material';
 import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
+import { Store } from '@ngrx/store';
+import { State } from '../../../redux/index';
+import { COURSES_NEXT_PAGE, COURSES_PREV_PAGE, COURSES_OPEN, CoursesState, COURSES_SEARCH, COURSE_DELETE } from '../../../redux/courses.reducer';
 
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.css']
 })
-export class CoursesListComponent implements OnInit, OnChanges, DoCheck, OnDestroy {
-  courses: Course[] = [];
+export class CoursesListComponent {
+  state: Observable<CoursesState>;
   filterSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   filterBy: FilterByPipe = new FilterByPipe();
   subscriptions = [];
 
-  constructor(private coursesService: CoursesService,
-    private dialog: MatDialog
+  constructor(
+    private dialog: MatDialog,
+    private store: Store<State>
   ) {
     console.log('constructor');
-  }
-
-  ngOnChanges() {
-    console.log('OnChanges');
-  }
-
-  ngOnInit() {
-    console.log('OnInit');
-    this.subscriptions.push(this.filterSubject.subscribe(filter => {
-      this.coursesService.setFilter(filter);
-    }));
-    this.subscriptions.push(this.coursesService.getList().subscribe(list => {
-      this.courses = list.toArray();
-    }));
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(subscriber => subscriber.unsubscribe());
-  }
-
-  ngDoCheck() {
-    console.log('DoCheck');
+    this.store.dispatch({type: COURSES_OPEN});
+    this.state = store.select('courses');
   }
 
   deleteCourse(event: Course) {
@@ -59,12 +42,19 @@ export class CoursesListComponent implements OnInit, OnChanges, DoCheck, OnDestr
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.coursesService.delete(event.id);
+        this.store.dispatch({type: COURSE_DELETE, payload: event});
       }
     });
   }
 
   filterByString(filter) {
-    this.filterSubject.next(filter);
+    this.store.dispatch({type: COURSES_SEARCH, payload: filter});
+  }
+
+  nextPage() {
+    this.store.dispatch({type: COURSES_NEXT_PAGE});
+  }
+  prevPage() {
+    this.store.dispatch({type: COURSES_PREV_PAGE});
   }
 }

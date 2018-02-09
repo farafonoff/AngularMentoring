@@ -24,7 +24,7 @@ export class CoursesBackendService {
   constructor(private http: Http) { }
 
 
-  fetchCourses(start, count, filter): Observable<List<Course>> {
+  fetchCourses(start, count, filter): Observable<Course[]> {
     console.log('fetch');
     return this.http.get(`http://localhost:3004/courses?start=${start}&count=${count}&query=${filter}`)
       .map(response => {
@@ -40,7 +40,7 @@ export class CoursesBackendService {
             course.authors.map(author => new Author(author.id, author.firstName, author.lastName))
           );
         });
-        return List(mappedData);
+        return mappedData;
       });
   }
 
