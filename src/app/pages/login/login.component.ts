@@ -20,13 +20,7 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     if (form.valid) {
-      this.store.dispatch( { type: loginReducer.LOGIN, payload: form.value });
-      /*this.authService.login(form.value.login, form.value.password)
-      .withLatestFrom(this.route.params, (login, params) => {
-        if (params.back) {
-          this.router.navigate([params.back]);
-        }
-      }).subscribe();*/
+      this.store.dispatch( { type: loginReducer.LOGIN, payload: { ...form.value, back: this.route.snapshot.params.back } } );
     }
   }
 

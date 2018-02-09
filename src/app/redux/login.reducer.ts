@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
-export const LOGIN_TOKEN = 'LOGIN_TOKEN';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 export class LoginState {
@@ -26,7 +26,7 @@ export function loginReducer(state: LoginState = new LoginState(null, null, 'ini
             newState.state = 'initial';
             return newState;
         }
-        case LOGOUT: {
+        case LOGOUT_SUCCESS: {
             newState.token = null;
             newState.userDetails = null;
             newState.state = 'logout';

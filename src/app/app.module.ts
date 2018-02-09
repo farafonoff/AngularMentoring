@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
-import { loginReducer } from './redux/login.reducer';
+import { reducer } from './redux';
 import { LoginEffects } from './redux/login-effects';
 
 import { AppComponent } from './app.component';
@@ -118,9 +118,7 @@ export const ROUTES: Routes = [
       ROUTES,
       { enableTracing: true } // <-- debugging purposes only
     ),
-    StoreModule.forRoot({
-      login: loginReducer
-    }),
+    StoreModule.forRoot(reducer),
     StoreDevtoolsModule.instrument({
       maxAge: 5
     }),

@@ -1,11 +1,11 @@
 <div class='container-fluid'>
   <div class='row align-items-center'>
     <app-logo class='col-auto'></app-logo>
-    <div class='breadcrumbs col' *ngIf="isLoggedIn">
+    <div class='breadcrumbs col' *ngIf="isAuthorized | async">
       <app-breadcrumb></app-breadcrumb>
     </div>
-    <div class='login-placeholder col-auto' *ngIf="isLoggedIn">
-      {{user?.login}}
+    <div class='login-placeholder col-auto' *ngIf="isAuthorized | async">
+      {{(user | async)?.login}}
       <br>
       <a href='#' (click)="logout()">logoff</a>
     </div>
