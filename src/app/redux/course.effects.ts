@@ -12,14 +12,11 @@ import { User } from '../model/user.model';
 import { ActionP } from './login.reducer';
 import { Router } from '@angular/router';
 import { State } from './index';
-import { COURSES_OPEN, COURSES_NEXT_PAGE, COURSES_PREV_PAGE, COURSES_LOAD_SUCCESS, COURSE_DELETE, COURSES_SEARCH } from './courses.reducer';
 import { CoursesBackendService } from '../services/courses-backend.service';
-import { COURSE_SAVED } from './course.reducer';
-
-export const AUTH_STORAGE_KEY = 'auth_token';
+import { COURSE_OPEN, COURSE_LOAD_SUCCESS, COURSE_NOT_FOUND, COURSE_SAVE, CourseState, COURSE_SAVED } from './course.reducer';
 
 @Injectable()
-export class CoursesEffects {
+export class CourseEffects {
     constructor(private actions: Actions, 
         private coursesBackend: CoursesBackendService, 
         private router: Router,
@@ -27,19 +24,23 @@ export class CoursesEffects {
     ) {
     }
 
-    @Effect() delete = this.actions
-        .ofType(COURSE_DELETE)
-        .switchMap((action: ActionP) => {
-            return this.coursesBackend.deleteCourse(action.payload.id)
-        })
-        .switchMap(() => Observable.empty());
-
     @Effect() load = this.actions
-        .ofType(COURSES_OPEN, COURSES_NEXT_PAGE, COURSES_PREV_PAGE, COURSE_DELETE, COURSES_SEARCH, COURSE_SAVED)
-        .withLatestFrom(this.store.select('courses'))
+        .ofType(COURSE_OPEN)
+        .switchMap((action: ActionP) => 
+            this.coursesBackend.fetchCourse(action.payload)
+            .map(course => { 
+                return { type: COURSE_LOAD_SUCCESS, payload: course} })
+            .catch(() => { return Observable.of({ type: COURSE_NOT_FOUND })})
+        );
+
+    @Effect() save = this.actions
+        .ofType(COURSE_SAVE)
+        .withLatestFrom(this.store.select('courseEdit'))
         .switchMap(([action, state]) => {
-            console.log(state);
-            return this.coursesBackend.fetchCourses(state.start, state.pageSize, state.search)            
-        })
-        .map((courses) => { return { type: COURSES_LOAD_SUCCESS, payload: courses }})
+            if (state.isNew) {
+                return this.coursesBackend.create((<ActionP>action).payload);
+            } else {
+                return this.coursesBackend.update((<ActionP>action).payload);
+            }
+        }).map(() => {return {type: COURSE_SAVED}});
 }

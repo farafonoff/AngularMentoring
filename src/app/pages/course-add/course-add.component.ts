@@ -8,7 +8,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/combineLatest';
-import { CoursesService } from '../../services/courses.service';
+import { Store } from '@ngrx/store';
+import { State } from '../../redux/index';
+import { COURSE_NEW, COURSE_SAVE } from '../../redux/course.reducer';
 
 @Component({
   selector: 'app-course-add',
@@ -24,19 +26,16 @@ export class CourseAddComponent implements OnInit, OnDestroy {
 
   constructor(
     private authorsService: AuthorsService,
-    private coursesService: CoursesService,
     private router: Router,
     private location: Location,
+    private store: Store<State>,
     private route: ActivatedRoute) {
     this.subscriptions.push(authorsService.getList().subscribe(authors => {
       this.allAuthors = authors.toArray();
     }));
-    route.data.subscribe(data => {
-      if (!data.new) {
-        this.courseId = data.course.id;
-        this.courseForm.reset(data.course);
-      }
-    });
+    this.store.select('courseEdit').subscribe((state) => {
+      this.courseForm.reset(state.course);
+    })
   }
 
   buildForm(course) {
@@ -54,6 +53,9 @@ export class CourseAddComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (this.route.snapshot.data.new) {
+      this.store.dispatch({type: COURSE_NEW});
+    }
   }
 
   ngOnDestroy() {
@@ -62,12 +64,7 @@ export class CourseAddComponent implements OnInit, OnDestroy {
 
   submit() {
     if (this.courseForm.valid) {
-      if (this.isNew) {
-        this.coursesService.create(this.courseForm.value);
-      } else {
-        const course = Object.assign({}, this.courseForm.value, { id: this.courseId });
-        this.coursesService.update(course);
-      }
+      this.store.dispatch({type: COURSE_SAVE, payload: this.courseForm.value});
       this.router.navigate(['courses']);
     }
   }

@@ -24,7 +24,7 @@ export interface ActionP extends Action {
     payload: any;
 }
 
-export function courseReducer(state: CoursesState = new CoursesState(), action: ActionP): CoursesState {
+export function coursesReducer(state: CoursesState = new CoursesState(), action: ActionP): CoursesState {
     const newState = _.cloneDeep(state);
     switch (action.type) {
         case COURSES_OPEN: {

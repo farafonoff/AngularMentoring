@@ -21,7 +21,6 @@ import { HeaderComponent } from './common/header/header.component';
 import { FooterComponent } from './common/footer/footer.component';
 import { LogoComponent } from './common/logo/logo.component';
 import { ToolboxComponent } from './pages/courses/toolbox/toolbox.component';
-import { CoursesService } from './services/courses.service';
 import { FreshnessDirective } from './directives/freshness.directive';
 import { FormatDurationPipe } from './pipes/format-duration.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
@@ -44,6 +43,7 @@ import { CoursesListComponent } from './pages/courses/courses-list/courses-list.
 import { CoursesResolverService } from './services/courses-resolver.service';
 import { AuthBackendService } from './services/auth-backend.service';
 import { CoursesEffects } from './redux/courses.effects';
+import { CourseEffects } from './redux/course.effects';
 
 export const ROUTES: Routes = [
   {
@@ -122,16 +122,15 @@ export const ROUTES: Routes = [
     StoreDevtoolsModule.instrument({
       maxAge: 5
     }),
-    EffectsModule.forRoot([LoginEffects, CoursesEffects])
+    EffectsModule.forRoot([LoginEffects, CoursesEffects, CourseEffects])
   ],
   entryComponents: [
     CourseDeletePopupComponent
   ],
-  providers: [CoursesService,
-    HttpAuthorized,
+  providers: [HttpAuthorized,
     AuthorsService, CoursesBackendService,
     AuthorsBackendService, AuthGuard,
-    CoursesResolverService, AuthBackendService, CoursesEffects],
+    CoursesResolverService, AuthBackendService, CoursesEffects, CourseEffects],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
