@@ -11,6 +11,7 @@ import { State } from '../redux/index';
 import { Actions } from '@ngrx/effects';
 import { COURSE_OPEN, COURSE_LOAD_SUCCESS, COURSE_NOT_FOUND, ActionP } from '../redux/course.reducer';
 import { noop } from 'lodash';
+import { AUTHORS_LOAD } from '../redux/authors.reducer';
 
 @Injectable()
 export class CoursesResolverService implements Resolve<Course> {

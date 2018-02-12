@@ -11,14 +11,14 @@ export class AuthorsBackendService {
 
   constructor(private http: Http) { }
 
-  public fetchAuthors(): Observable<List<Author>> {
+  public fetchAuthors(): Observable<Author[]> {
     return this.http.get(`http://localhost:3004/authors`)
     .map(response => {
       const jsonData = response.json();
       const mapped = jsonData.map(author => {
         return new Author(author.id, author.firstName, author.lastName);
       });
-      return List(mapped);
+      return mapped;
     });
   }
 

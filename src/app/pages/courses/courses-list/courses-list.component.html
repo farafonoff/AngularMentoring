@@ -1,8 +1,8 @@
 <app-toolbox (findClick)="filterByString($event)"></app-toolbox>
 <div class='container'>
     <div class='row'>
-      <button class='col-6 mat-raised-button' (click)="prevPage()">&lt; PREV 10</button>
-      <button class='col-6 mat-raised-button mat-primary '  (click)="nextPage()"> NEXT 10 &gt;</button>
+      <button class='col-6 mat-raised-button' (click)="prevPage()" [disabled]="!(state | async).hasLess">&lt; PREV 10</button>
+      <button class='col-6 mat-raised-button mat-primary '  (click)="nextPage()" [disabled]="!(state | async).hasMore"> NEXT 10 &gt;</button>
     </div>
   <div class='row my-5' *ngFor="let course of ((state | async).data || []) | orderBy:'createDate'">
     <div class='col-12'>

@@ -34,7 +34,6 @@ import { ControlDateComponent } from './pages/course-add/control-date/control-da
 import { ControlDurationComponent } from './pages/course-add/control-duration/control-duration.component';
 import { ControlAuthorsComponent } from './pages/course-add/control-authors/control-authors.component';
 import { MinValueDirective } from './directives/min-value.directive';
-import { AuthorsService } from './services/authors.service';
 import { AuthorsBackendService } from './services/authors-backend.service';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthGuard } from './services/auth-guard';
@@ -44,6 +43,7 @@ import { CoursesResolverService } from './services/courses-resolver.service';
 import { AuthBackendService } from './services/auth-backend.service';
 import { CoursesEffects } from './redux/courses.effects';
 import { CourseEffects } from './redux/course.effects';
+import { AuthorsEffects } from './redux/authors.effects';
 
 export const ROUTES: Routes = [
   {
@@ -122,15 +122,15 @@ export const ROUTES: Routes = [
     StoreDevtoolsModule.instrument({
       maxAge: 5
     }),
-    EffectsModule.forRoot([LoginEffects, CoursesEffects, CourseEffects])
+    EffectsModule.forRoot([LoginEffects, CoursesEffects, CourseEffects, AuthorsEffects])
   ],
   entryComponents: [
     CourseDeletePopupComponent
   ],
   providers: [HttpAuthorized,
-    AuthorsService, CoursesBackendService,
+    CoursesBackendService,
     AuthorsBackendService, AuthGuard,
-    CoursesResolverService, AuthBackendService, CoursesEffects, CourseEffects],
+    CoursesResolverService, AuthBackendService, CoursesEffects, CourseEffects, AuthorsEffects],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

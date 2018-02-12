@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
-import { 
-  ControlValueAccessor, 
-  NG_VALUE_ACCESSOR, 
-  NG_VALIDATORS, 
-  FormControl, 
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  FormControl,
   Validator,
   AbstractControl,
   ValidationErrors
@@ -45,7 +45,7 @@ export class ControlDateComponent implements OnInit, ControlValueAccessor, Valid
     this.onTouchedCallback = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   constructor() { }

@@ -1,5 +1,5 @@
-import { Course } from "../model/course.model";
-import { Action } from "@ngrx/store";
+import { Course } from '../model/course.model';
+import { Action } from '@ngrx/store';
 
 import * as _ from 'lodash';
 
@@ -17,7 +17,7 @@ export class CoursesState {
     hasLess = false;
     pageSize = 10;
     search = '';
-    data: Course[];    
+    data: Course[];
 }
 
 export interface ActionP extends Action {
@@ -25,48 +25,48 @@ export interface ActionP extends Action {
 }
 
 export function coursesReducer(state: CoursesState = new CoursesState(), action: ActionP): CoursesState {
-    const newState = _.cloneDeep(state);
     switch (action.type) {
         case COURSES_OPEN: {
 /*            newState.start = 0;
             newState.prevStart = 0;
             newState.hasLess = false;
             newState.hasMore = true;*/
-            break;
+            return state;
         }
         case COURSES_NEXT_PAGE: {
-            newState.prevStart = state.start;
-            newState.start += state.pageSize;
-            break;
+            return {...state,
+                start: state.start + state.pageSize,
+                prevStart: state.start };
         }
         case COURSES_PREV_PAGE: {
             if (state.start > 0) {
-                newState.prevStart = state.start;
-                newState.start -= state.pageSize;    
+                return {...state,
+                    prevStart: state.start,
+                    start: state.start - state.pageSize
+                };
+            } else {
+                return state;
             }
-            break;
         }
         case COURSES_SEARCH: {
-            newState.search = action.payload;
-            newState.data = [];
-            break;
+            return {...state, search: action.payload, data: [] };
         }
         case COURSES_LOAD_SUCCESS: {
+            const newState = _.clone(state);
             newState.hasLess = state.start > 0;
             if (action.payload.length === state.pageSize) {
                 newState.hasMore = true;
                 newState.data = action.payload;
             } else if (action.payload.length === 0) {
                 newState.hasMore = false;
-                newState.start = newState.prevStart;                             
+                newState.start = newState.prevStart;
             } else {
                 newState.hasMore = false;
                 newState.data = action.payload;
             }
-            break;
+            return newState;
         }
-        default: 
+        default:
             return state;
     }
-    return newState;
 }

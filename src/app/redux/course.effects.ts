@@ -17,8 +17,8 @@ import { COURSE_OPEN, COURSE_LOAD_SUCCESS, COURSE_NOT_FOUND, COURSE_SAVE, Course
 
 @Injectable()
 export class CourseEffects {
-    constructor(private actions: Actions, 
-        private coursesBackend: CoursesBackendService, 
+    constructor(private actions: Actions,
+        private coursesBackend: CoursesBackendService,
         private router: Router,
         private store: Store<State>
     ) {
@@ -26,11 +26,11 @@ export class CourseEffects {
 
     @Effect() load = this.actions
         .ofType(COURSE_OPEN)
-        .switchMap((action: ActionP) => 
+        .switchMap((action: ActionP) =>
             this.coursesBackend.fetchCourse(action.payload)
-            .map(course => { 
-                return { type: COURSE_LOAD_SUCCESS, payload: course} })
-            .catch(() => { return Observable.of({ type: COURSE_NOT_FOUND })})
+            .map(course => {
+                return { type: COURSE_LOAD_SUCCESS, payload: course}; })
+            .catch(() => Observable.of({ type: COURSE_NOT_FOUND }))
         );
 
     @Effect() save = this.actions
@@ -42,5 +42,5 @@ export class CourseEffects {
             } else {
                 return this.coursesBackend.update((<ActionP>action).payload);
             }
-        }).map(() => {return {type: COURSE_SAVED}});
+        }).map(() => ({type: COURSE_SAVED}));
 }

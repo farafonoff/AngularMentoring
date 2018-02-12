@@ -20,8 +20,8 @@ export const AUTH_STORAGE_KEY = 'auth_token';
 
 @Injectable()
 export class CoursesEffects {
-    constructor(private actions: Actions, 
-        private coursesBackend: CoursesBackendService, 
+    constructor(private actions: Actions,
+        private coursesBackend: CoursesBackendService,
         private router: Router,
         private store: Store<State>
     ) {
@@ -30,7 +30,7 @@ export class CoursesEffects {
     @Effect() delete = this.actions
         .ofType(COURSE_DELETE)
         .switchMap((action: ActionP) => {
-            return this.coursesBackend.deleteCourse(action.payload.id)
+            return this.coursesBackend.deleteCourse(action.payload.id);
         })
         .switchMap(() => Observable.empty());
 
@@ -39,7 +39,7 @@ export class CoursesEffects {
         .withLatestFrom(this.store.select('courses'))
         .switchMap(([action, state]) => {
             console.log(state);
-            return this.coursesBackend.fetchCourses(state.start, state.pageSize, state.search)            
+            return this.coursesBackend.fetchCourses(state.start, state.pageSize, state.search);
         })
-        .map((courses) => { return { type: COURSES_LOAD_SUCCESS, payload: courses }})
+        .map((courses) => ({ type: COURSES_LOAD_SUCCESS, payload: courses }));
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef } from '@angular/core';
-import { 
-  ControlValueAccessor, 
-  NG_VALUE_ACCESSOR, 
-  NG_VALIDATORS, 
-  FormControl, 
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  FormControl,
   Validator,
   AbstractControl,
   ValidationErrors
@@ -14,12 +14,12 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => ControlDurationComponent),
   multi: true
-}
+};
 export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
   provide: NG_VALIDATORS,
   useExisting: forwardRef(() => ControlDurationComponent),
   multi: true
-}
+};
 
 @Component({
   selector: 'app-control-duration',
@@ -44,7 +44,7 @@ export class ControlDurationComponent implements OnInit, ControlValueAccessor, V
     this.onTouchedCallback = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   constructor() { }

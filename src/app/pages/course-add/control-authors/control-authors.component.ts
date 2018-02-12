@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef, Input } from '@angular/core';
-import { 
-  ControlValueAccessor, 
-  NG_VALUE_ACCESSOR, 
-  NG_VALIDATORS, 
-  FormControl, 
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  FormControl,
   Validator,
   AbstractControl,
   ValidationErrors
@@ -49,7 +49,7 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
     this.onTouchedCallback = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit() {

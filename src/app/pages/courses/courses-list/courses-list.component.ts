@@ -12,7 +12,14 @@ import { MatDialog } from '@angular/material';
 import { CourseDeletePopupComponent } from '../course-delete-popup/course-delete-popup.component';
 import { Store } from '@ngrx/store';
 import { State } from '../../../redux/index';
-import { COURSES_NEXT_PAGE, COURSES_PREV_PAGE, COURSES_OPEN, CoursesState, COURSES_SEARCH, COURSE_DELETE } from '../../../redux/courses.reducer';
+import {
+  CoursesState,
+  COURSES_NEXT_PAGE,
+  COURSES_PREV_PAGE,
+  COURSES_OPEN,
+  COURSES_SEARCH,
+  COURSE_DELETE
+} from '../../../redux/courses.reducer';
 
 @Component({
   selector: 'app-courses-list',
@@ -30,7 +37,7 @@ export class CoursesListComponent {
     private store: Store<State>
   ) {
     console.log('constructor');
-    this.store.dispatch({type: COURSES_OPEN});
+    this.store.dispatch({ type: COURSES_OPEN });
     this.state = store.select('courses');
   }
 
@@ -42,19 +49,19 @@ export class CoursesListComponent {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.store.dispatch({type: COURSE_DELETE, payload: event});
+        this.store.dispatch({ type: COURSE_DELETE, payload: event });
       }
     });
   }
 
   filterByString(filter) {
-    this.store.dispatch({type: COURSES_SEARCH, payload: filter});
+    this.store.dispatch({ type: COURSES_SEARCH, payload: filter });
   }
 
   nextPage() {
-    this.store.dispatch({type: COURSES_NEXT_PAGE});
+    this.store.dispatch({ type: COURSES_NEXT_PAGE });
   }
   prevPage() {
-    this.store.dispatch({type: COURSES_PREV_PAGE});
+    this.store.dispatch({ type: COURSES_PREV_PAGE });
   }
 }

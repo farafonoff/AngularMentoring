@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { CanActivate } from "@angular/router/src/interfaces";
-import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from "@angular/router";
-import { Observable } from "rxjs/Observable";
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router/src/interfaces';
+import { RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
-import { Store } from "@ngrx/store";
-import { State } from "../redux";
+import { Store } from '@ngrx/store';
+import { State } from '../redux';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

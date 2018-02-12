@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Course } from '../../model/course.model';
-import { AuthorsService } from '../../services/authors.service';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ControlDateComponent } from './control-date/control-date.component';
@@ -11,6 +10,7 @@ import 'rxjs/add/operator/combineLatest';
 import { Store } from '@ngrx/store';
 import { State } from '../../redux/index';
 import { COURSE_NEW, COURSE_SAVE } from '../../redux/course.reducer';
+import { AuthorsState, AUTHORS_LOAD } from '../../redux/authors.reducer';
 
 @Component({
   selector: 'app-course-add',
@@ -18,24 +18,22 @@ import { COURSE_NEW, COURSE_SAVE } from '../../redux/course.reducer';
   styleUrls: ['./course-add.component.css']
 })
 export class CourseAddComponent implements OnInit, OnDestroy {
-  allAuthors = [];
+  authors: Observable<AuthorsState>;
   subscriptions = [];
   isNew: boolean;
   courseId: number;
   courseForm = this.buildForm(new Course());
 
   constructor(
-    private authorsService: AuthorsService,
     private router: Router,
     private location: Location,
     private store: Store<State>,
     private route: ActivatedRoute) {
-    this.subscriptions.push(authorsService.getList().subscribe(authors => {
-      this.allAuthors = authors.toArray();
-    }));
-    this.store.select('courseEdit').subscribe((state) => {
+    this.store.dispatch({type: AUTHORS_LOAD});
+    this.authors = this.store.select('authors');
+    this.subscriptions.push(this.store.select('courseEdit').subscribe((state) => {
       this.courseForm.reset(state.course);
-    })
+    }));
   }
 
   buildForm(course) {

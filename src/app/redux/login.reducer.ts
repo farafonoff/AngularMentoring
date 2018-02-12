@@ -1,5 +1,5 @@
 import { ActionReducer, Action } from '@ngrx/store';
-import { User } from "../model/user.model";
+import { User } from '../model/user.model';
 import * as _ from 'lodash';
 
 export const LOGIN = 'LOGIN';
@@ -20,23 +20,15 @@ export interface ActionP extends Action {
 }
 
 export function loginReducer(state: LoginState = new LoginState(null, null, 'initial'), action: ActionP) {
-    const newState: LoginState = _.cloneDeep(state);
     switch (action.type) {
         case LOGIN: {
-            newState.state = 'initial';
-            return newState;
+            return { ...state, state: 'initial' };
         }
         case LOGOUT_SUCCESS: {
-            newState.token = null;
-            newState.userDetails = null;
-            newState.state = 'logout';
-            return newState;
+            return { ...state, token: null, userDetails: null, state: 'logout' };
         }
         case LOGIN_SUCCESS: {
-            newState.state = 'success';
-            newState.token = action.payload.token;
-            newState.userDetails = action.payload.userDetails;
-            return newState;
+            return { ...state, token: action.payload.token, userDetails: action.payload.userDetails, state: 'success' };
         }
         default:
             return state;

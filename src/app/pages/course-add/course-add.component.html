@@ -21,7 +21,7 @@
         --><span *ngIf="!last">, </span>
       </span>
     </p>
-    <app-control-authors formControlName="authors" [allAuthors]="allAuthors">
+    <app-control-authors formControlName="authors" [allAuthors]="(authors | async).authors">
 
     </app-control-authors>
     <span class="error-display" *ngIf="dirtyAndInvalid('authors')">{{courseForm.get('authors').errors | json}}</span>

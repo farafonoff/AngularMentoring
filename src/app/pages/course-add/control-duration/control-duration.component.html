@@ -2,5 +2,5 @@
   <mat-form-field>
     <input matInput placeholder="Duration" (change)="onChange($event)" (blur)="onBlur($event)" [(ngModel)]="value">
   </mat-form-field>
-  <span>{{innerValue | formatDuration}}</span>
+  <span>{{value | formatDuration}}</span>
 </div>

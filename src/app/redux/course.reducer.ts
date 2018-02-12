@@ -1,5 +1,5 @@
-import { Course } from "../model/course.model";
-import { Action } from "@ngrx/store";
+import { Course } from '../model/course.model';
+import { Action } from '@ngrx/store';
 
 import * as _ from 'lodash';
 
@@ -12,7 +12,7 @@ export const COURSE_SAVED = 'COURSE_SAVED';
 
 export class CourseState {
     course: Course = new Course();
-    isNew: boolean = true;
+    isNew = true;
 }
 
 export interface ActionP extends Action {
@@ -21,20 +21,16 @@ export interface ActionP extends Action {
 
 export function courseReducer(state: CourseState = new CourseState(), action: ActionP): CourseState {
     const newState = _.cloneDeep(state);
-    switch(action.type) {
-        case COURSE_NEW: 
-            newState.course = new Course();
-            newState.isNew = true;
-            break;
+    switch (action.type) {
+        case COURSE_NEW:
+            return {...state, course: new Course(), isNew: true };
         case COURSE_LOAD_SUCCESS:
-            newState.course = action.payload;
-            newState.isNew = false;
-            break;
+            return {...state, course: action.payload, isNew: false };
         case COURSE_SAVE:
             const course = action.payload;
             course.id = state.course.id;
-            newState.course = course;
-            break;
+            return {...state, course };
+        default:
+            return state;
     }
-    return newState;
 }
