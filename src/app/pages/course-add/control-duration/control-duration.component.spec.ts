@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ControlDurationComponent } from './control-duration.component';
+import { FormatDurationPipe } from '../../../pipes/format-duration.pipe';
+import { FormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('ControlDurationComponent', () => {
   let component: ControlDurationComponent;
@@ -8,7 +11,9 @@ describe('ControlDurationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ControlDurationComponent ]
+      imports: [ FormsModule ],
+      declarations: [ ControlDurationComponent, FormatDurationPipe ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
   }));

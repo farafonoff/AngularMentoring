@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { RouterTestingModule  } from '@angular/router/testing';
+import { AppModule } from '../../app.module';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent;
@@ -8,7 +11,10 @@ describe('BreadcrumbComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BreadcrumbComponent ]
+      imports: [ RouterTestingModule, AppModule ],
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'}
+      ]
     })
     .compileComponents();
   }));
