@@ -5,7 +5,7 @@ import 'rxjs/add/operator/filter';
 import * as _ from 'lodash';
 import { Course } from '../../model/course.model';
 
-class Breadcrumb {
+export class Breadcrumb {
   constructor(
     public path: string[],
     public title: string

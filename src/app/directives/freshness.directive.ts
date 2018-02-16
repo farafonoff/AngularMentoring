@@ -16,6 +16,7 @@ export class FreshnessDirective implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(moment(this.appFreshness).format(), moment().format());
     if (moment(this.appFreshness).diff(moment()) > 0) {
       // upcoming
       this.renderer.setStyle(this.elem.nativeElement, 'border-color', 'blue');
