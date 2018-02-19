@@ -37,6 +37,7 @@ describe('CoursesReducer', () => {
         myState = coursesReducer(myState, emptypage);
         expect(myState.hasMore).toBeFalsy();
         expect(myState.start).toBe(10);
+        expect(myState.data.length).toBe(10);
     });
 
     const firstpage = {
