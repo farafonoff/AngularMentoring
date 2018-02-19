@@ -10,15 +10,10 @@ import {
 } from '@angular/forms';
 import { noop } from 'lodash';
 import * as _ from 'lodash';
+import { Author } from '../../../model/author.model';
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => ControlAuthorsComponent),
-  multi: true
-};
-
-export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
-  provide: NG_VALIDATORS,
   useExisting: forwardRef(() => ControlAuthorsComponent),
   multi: true
 };
@@ -27,9 +22,9 @@ export const CUSTOM_INPUT_CONTROL_VALIDATORS: any = {
   selector: 'app-control-authors',
   templateUrl: './control-authors.component.html',
   styleUrls: ['./control-authors.component.css'],
-  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR, CUSTOM_INPUT_CONTROL_VALIDATORS]
+  providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Validator {
+export class ControlAuthorsComponent implements OnInit, ControlValueAccessor {
   @Input() allAuthors = [];
   private selectedAuthors = [];
   private isValid = false;
@@ -38,7 +33,7 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
 
   constructor() { }
 
-  writeValue(obj: any): void {
+  writeValue(obj: Author[]): void {
     console.log('writeValue ', obj);
     this.selectedAuthors = obj;
   }
@@ -53,10 +48,6 @@ export class ControlAuthorsComponent implements OnInit, ControlValueAccessor, Va
   }
 
   ngOnInit() {
-  }
-
-  validate(c: AbstractControl): ValidationErrors {
-    return null;
   }
 
   toggleAuthor(author, event) {

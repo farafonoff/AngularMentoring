@@ -26,13 +26,13 @@ export interface ActionP extends Action {
 
 export function coursesReducer(state: CoursesState = new CoursesState(), action: ActionP): CoursesState {
     switch (action.type) {
-        case COURSES_OPEN: {
-/*            newState.start = 0;
+/*        case COURSES_OPEN: {
+            newState.start = 0;
             newState.prevStart = 0;
             newState.hasLess = false;
-            newState.hasMore = true;*/
+            newState.hasMore = true;
             return state;
-        }
+        }*/
         case COURSES_NEXT_PAGE: {
             return {...state,
                 start: state.start + state.pageSize,
